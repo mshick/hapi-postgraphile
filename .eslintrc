@@ -1,0 +1,9 @@
+{
+  "extends": "parsley/esnext",
+  "settings": {
+    "import/resolver": "node"
+  },
+  "env": {
+    "node": true
+  }
+}

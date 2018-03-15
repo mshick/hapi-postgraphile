@@ -1,0 +1,13 @@
+env:
+  - POSTGRES_USER=postgres POSTGRES_DB=travis_ci_test
+sudo: false
+language: node_js
+cache: npm
+services:
+  - postgresql
+addons:
+  postgresql: "9.6"
+node_js:
+  - 8
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres

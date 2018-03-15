@@ -1,0 +1,77 @@
+{
+  "title": "hapi-postgraphile options",
+  "type": "object",
+  "properties": {
+    "routes": {
+      "type": ["object", "boolean"],
+      "properties": {
+        "graphql": {
+          "type": "object"
+        },
+        "schemas": {
+          "type": "object"
+        }
+      }
+    },
+    "pgConfig": {
+      "type": ["string", "object"]
+    },
+    "pgSettings": {
+      "type": "string"
+    },
+    "schemaName": {
+      "type": "string"
+    },
+    "schemaOptions": {
+      "type": "object",
+      "properties": {
+        "watchPg": {
+          "type": "boolean"
+        },
+        "classicIds": {
+          "type": "boolean"
+        },
+        "dynamicJson": {
+          "type": "boolean"
+        },
+        "jwtSecret": {
+          "type": "string"
+        },
+        "jwtPgTypeIdentifier": {
+          "type": "string"
+        },
+        "jwtAudiences": {
+          "type": "array"
+        },
+        "pgDefaultRole": {
+          "type": "string"
+        },
+        "disableDefaultMutations": {
+          "type": "boolean"
+        },
+        "setofFunctionsContainNulls": {
+          "type": "boolean"
+        },
+        "showErrorStack": {
+          "type": ["boolean", "string"]
+        },
+        "extendedErrors": {
+          "type": "array"
+        },
+        "readCache": {
+          "type": "string"
+        },
+        "writeCache": {
+          "type": "string"
+        },
+        "legacyRelations": {
+          "type": "boolean"
+        },
+        "legacyJsonUuid": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "required": ["pgConfig"]
+}

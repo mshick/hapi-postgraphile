@@ -1,0 +1,54 @@
+{
+  "name": "hapi-postgraphile",
+  "version": "0.1.0",
+  "author": "Michael Shick <m@shick.us>",
+  "license": "MIT",
+  "description": "A postgraphile plugin for HAPI 17+.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "node --require dotenv/config node_modules/.bin/ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mshick/hapi-postgraphile.git"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "keywords": [
+    "hapi",
+    "postgresql",
+    "postgres",
+    "keyval",
+    "keystore",
+    "upsert",
+    "set",
+    "database",
+    "query"
+  ],
+  "bugs": {
+    "url": "https://github.com/mshick/hapi-postgraphile/issues"
+  },
+  "homepage": "https://github.com/mshick/hapi-postgraphile#readme",
+  "dependencies": {
+    "ajv": "^6.2.1",
+    "boom": "^7.2.0",
+    "graphql": "^0.13.1",
+    "lodash": "^4.17.5",
+    "postgraphile": "^4.0.0-beta.2"
+  },
+  "devDependencies": {
+    "ava": "^0.25.0",
+    "babel-eslint": "^8.0.0",
+    "dotenv": "^5.0.1",
+    "eslint": "^4.18.2",
+    "eslint-config-parsley": "^1.2.1",
+    "eslint-plugin-filenames": "^1.2.0",
+    "eslint-plugin-import": "^2.7.0",
+    "hapi": "^17.2.2",
+    "pg": "^7.4.1"
+  },
+  "peerDependencies": {
+    "hapi": "^17.0.0"
+  }
+}
