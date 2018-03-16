@@ -1,6 +1,12 @@
 # hapi-postgraphile [![Build Status](https://travis-ci.org/mshick/hapi-postgraphile.svg?branch=master)](https://travis-ci.org/mshick/hapi-postgraphile) [![npm version](https://badge.fury.io/js/hapi-postgraphile.svg)](https://badge.fury.io/js/hapi-postgraphile)
 A [Postgraphile](https://www.graphile.org/postgraphile/) plugin for HAPI.
 
+## Installation
+
+```bash
+npm install hapi-postgraphile
+```
+
 ## Config
 
 ```javascript
@@ -44,5 +50,7 @@ All of the options documented [here](https://www.graphile.org/postgraphile/usage
 
 ## Requirements
 
-* node.js >= 8.0
-* PostgresQL >= 9.6 (tested with 9.6)
+*   node.js >= 8.6
+*   PostgresQL >= 9.6 (tested with 9.6)
+*   [HAPI](https://github.com/hapijs/hapi) v17 as a peer dependency
+*   [pg](https://github.com/brianc/node-postgres) module as a peer dependency
