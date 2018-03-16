@@ -1,29 +1,17 @@
 const Ajv = require('ajv');
 const {createPostGraphileSchema} = require('postgraphile');
-const lodash = require('lodash/fp');
-const {defaultsDeep, isString} = lodash;
-const settingsSchema = require('./settings-schema.json');
+const {cloneDeep, isString} = require('lodash/fp');
+const settingsSchema = require('./schemas/settings.json');
 const urlToConfig = require('./utils/url-to-config');
 const createPool = require('./create-pool');
 const methods = require('./methods');
 const routes = require('./routes');
 const pkg = require('../package.json');
 
-const ajv = new Ajv();
+const ajv = new Ajv({useDefaults: true});
 
-const defaultOptions = {
-  pgConfig: 'postgres://localhost/',
-  schemaName: 'public',
-  schemaOptions: {
-    jwtAudiences: ['postgraphile']
-  },
-  route: {
-    path: '/graphql'
-  }
-};
-
-const register = async (server, options) => {
-  const settings = defaultsDeep(defaultOptions, options);
+const register = async (server, options = {}) => {
+  const settings = cloneDeep(options);
 
   if (isString(settings.pgConfig)) {
     settings.pgConfig = urlToConfig(settings.pgConfig);
@@ -42,9 +30,9 @@ const register = async (server, options) => {
 
   server.app[pkg.name] = state;
 
-  const {pgConfig, schemaName, schemaOptions} = settings;
+  const {pgConfig, pgOptions, schemaName, schemaOptions} = settings;
 
-  state.pgPool = await createPool(pgConfig);
+  state.pgPool = await createPool(pgConfig, pgOptions);
   state.schema = await createPostGraphileSchema(state.pgPool, schemaName, schemaOptions);
 
   const {password: _, ...connectionToLog} = pgConfig;

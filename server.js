@@ -12,6 +12,15 @@ const start = async () => {
       plugin,
       options: {
         pgConfig,
+        pgOptions: {
+          native: true
+        },
+        cacheAllowedOperations: [
+          'getCurrentPerson'
+        ],
+        cacheConfig: {
+          expiresIn: 1 * 60 * 60 * 1000
+        },
         schemaName: 'forum_example',
         schemaOptions: {
           jwtSecret: 'keyboard_kitten',
@@ -19,7 +28,7 @@ const start = async () => {
           pgDefaultRole: 'forum_example_anonymous'
         }
       }
-    }, {routes: {prefix: '/foo'}});
+    });
 
     await server.start();
 

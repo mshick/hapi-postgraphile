@@ -7,8 +7,8 @@ const performQuery = server => {
   const {pgPool, schema} = server.app[pkg.name];
   const {schemaOptions} = server.plugins[pkg.name].settings;
 
-  return async (graphqlRequest, options = {}) => {
-    const {query, variables, operationName} = graphqlRequest;
+  return async (graphqlQuery, options = {}) => {
+    const {query, variables, operationName} = graphqlQuery;
     options = defaults(schemaOptions, options);
 
     const {
