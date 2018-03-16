@@ -52,10 +52,15 @@ const graphqlQuery = server => {
     }
 
     if (jwtAuthenticate) {
+      const {returnPath, cookieName, cookieOptions} = jwtAuthenticate;
+
       if (jwtAuthenticate.cookieName && operationName === jwtAuthenticate.operationName) {
-        const {returnPath, cookieName, cookieOptions} = jwtAuthenticate;
         const token = get(returnPath, result);
         h.state(cookieName, token, cookieOptions);
+      }
+
+      if (jwtAuthenticate.cookieName && operationName === jwtAuthenticate.logoutOperationName) {
+        h.unstate(cookieName, cookieOptions);
       }
     }
 

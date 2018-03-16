@@ -60,6 +60,10 @@
           "type": "string",
           "default": "authenticate"
         },
+        "logoutOperationName": {
+          "type": "string",
+          "default": "logout"
+        },
         "returnPath": {
           "type": ["string", "null"],
           "default": "data.authenticate.jwtToken"

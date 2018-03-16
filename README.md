@@ -93,12 +93,12 @@ Defaults shown.
 
 -   `postgraphile.performQuery(graphqlRequest, [options])`
 
-    * `graphqlRequest`: `{query, variables, operationName}`
+    * `graphqlQuery`: `{query, variables, operationName}`
     * `options`: `{jwtToken, [schemaOptions]}` — the options object can provide the JWT for the request and override any of the global schemaOptions if needed.
     
 -   `postgraphile.performQueryWithCache(graphqlRequest)`
 
-    * `graphqlRequest`: `{query, variables, operationName}`
+    * `graphqlQuery`: `{query, variables, operationName}`
     * cached queries cannot use options — they are ultimately uncachabled with a simple key/val lookup, and we'd also run into issues with JWT authentication.
 
 ## Requirements
