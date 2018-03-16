@@ -1,0 +1,176 @@
+{
+  "title": "hapi-postgraphile options",
+  "type": "object",
+  "properties": {
+    "route": {
+      "type": ["object", "boolean"],
+      "default": {},
+      "properties": {
+        "path": {
+          "type": "string",
+          "default": "/graphql"
+        },
+        "options": {
+          "type": "object"
+        }
+      }
+    },
+    "cacheAllowedOperations": {
+      "type": ["array", "null"]
+    },
+    "cacheConfig": {
+      "type": ["object", "null"],
+      "default": null,
+      "properties": {
+        "segment": {
+          "type": "string"
+        },
+        "expiresIn": {
+          "type": "number"
+        },
+        "expiresAt": {
+          "type": "string"
+        },
+        "staleIn": {
+          "type": "number"
+        },
+        "staleTimeout": {
+          "type": "number"
+        },
+        "generateTimeout": {
+          "type": "number",
+          "default": 500
+        }
+      },
+      "required": ["generateTimeout"]
+    },
+    "jwtAuthenticate": {
+      "type": ["object", "null"],
+      "default": {},
+      "properties": {
+        "headerName": {
+          "type": ["string", "null"],
+          "default": "authorization"
+        },
+        "tokenType": {
+          "type": "string",
+          "default": "Bearer"
+        },
+        "operationName": {
+          "type": "string",
+          "default": "authenticate"
+        },
+        "returnPath": {
+          "type": ["string", "null"],
+          "default": "data.authenticate.jwtToken"
+        },
+        "cookieName": {
+          "type": ["string", "null"],
+          "default": "token"
+        },
+        "cookieOptions": {
+          "type": ["object", "null"],
+          "default": {},
+          "properties": {
+            "encoding": {
+              "type": ["string", "null"],
+              "default": "none"
+            },
+            "isSecure": {
+              "type": "boolean",
+              "default": false
+            },
+            "isHttpOnly": {
+              "type": "boolean",
+              "default": true
+            },
+            "clearInvalid": {
+              "type": "boolean",
+              "default": false
+            },
+            "strictHeader": {
+              "type": "boolean",
+              "default": true
+            },
+            "path": {
+              "type": ["string", "null"],
+              "default": "/"
+            }
+          }
+        }
+      }
+    },
+    "pgConfig": {
+      "type": ["string", "object"]
+    },
+    "pgOptions": {
+      "type": ["object", "null"],
+      "properties": {
+        "native": {
+          "type": "boolean"
+        }
+      }
+    },
+    "schemaName": {
+      "type": "string",
+      "default": "public"
+    },
+    "schemaOptions": {
+      "type": "object",
+      "properties": {
+        "watchPg": {
+          "type": "boolean"
+        },
+        "classicIds": {
+          "type": "boolean"
+        },
+        "dynamicJson": {
+          "type": "boolean"
+        },
+        "jwtSecret": {
+          "type": "string"
+        },
+        "jwtPgTypeIdentifier": {
+          "type": "string"
+        },
+        "jwtAudiences": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "default": ["postgraphile"]
+        },
+        "pgDefaultRole": {
+          "type": "string"
+        },
+        "disableDefaultMutations": {
+          "type": "boolean"
+        },
+        "setofFunctionsContainNulls": {
+          "type": "boolean"
+        },
+        "showErrorStack": {
+          "type": ["boolean", "string"]
+        },
+        "extendedErrors": {
+          "type": "array"
+        },
+        "readCache": {
+          "type": "string"
+        },
+        "writeCache": {
+          "type": "string"
+        },
+        "legacyRelations": {
+          "type": "boolean"
+        },
+        "legacyJsonUuid": {
+          "type": "boolean"
+        }
+      },
+      "required": ["jwtSecret", "jwtAudiences"]
+    }
+  },
+  "required": ["pgConfig"]
+}

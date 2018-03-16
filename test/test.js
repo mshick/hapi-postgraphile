@@ -1,12 +1,12 @@
 import test from 'ava';
 import hapi from 'hapi';
-import plugin from '../lib';
+import plugin from '../src';
 
 const {POSTGRES_USER, POSTGRES_DB} = process.env;
 const pgConfig = `postgresql://${POSTGRES_USER}@localhost/${POSTGRES_DB}`;
 
 test('simple test', async t => {
-  const server = hapi.server({port: 80});
+  const server = hapi.server({port: 5000});
 
   await server.register(plugin, {pgConfig});
 

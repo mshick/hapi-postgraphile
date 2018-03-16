@@ -7,9 +7,14 @@ try {
   pg = require('pg');
 }
 
-const createPool = async config => {
+const createPool = async (config, options = {}) => {
   try {
-    return new pg.Pool(config);
+    const poolConfig = {
+      ...config,
+      ...options
+    };
+
+    return new pg.Pool(poolConfig);
   } catch (error) {
     throw error;
   }
