@@ -104,12 +104,7 @@
       "type": ["string", "object"]
     },
     "pgOptions": {
-      "type": ["object", "null"],
-      "properties": {
-        "native": {
-          "type": "boolean"
-        }
-      }
+      "type": ["object", "null"]
     },
     "schemaName": {
       "type": "string",
