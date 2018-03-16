@@ -44,7 +44,8 @@ const graphqlQuery = server => {
 
     if (operationName && allowedOperation(operationName)) {
       if (postgraphile.performQueryWithCache) {
-        result = await postgraphile.performQueryWithCache(payload, options);
+        // Cached queries cannot have options
+        result = await postgraphile.performQueryWithCache(payload);
       }
     } else {
       result = await postgraphile.performQuery(payload, options);
