@@ -37,6 +37,54 @@ You should be able to walk through the excellent schema design tutorial [here](h
 
 All of the options documented [here](https://www.graphile.org/postgraphile/usage-schema/) are passed through to the `createPostGraphileSchema` function when provided in the `schemaOptions` config property.
 
+### Caching
+
+`hapi-postgraphile` can take advantage of your server cache. You will need to set up the cacheConfig parameters you pass to the plugin, and declare a list of allowed operation names. 
+
+Caching in this way, via the simple key/val store is very limited and can only cache queries using default options, and cannot cash requests requiring JWT authentication.
+
+### Authentication cookie
+
+You can also set up your endpoint to store a cookie with your JWT. This is helpful for a more secure system. You must provide a few params: the cookieName, your authentication mutation operation name, and any cookie options. 
+
+### (Nearly) All the options
+
+Defaults shown.
+
+```javascript
+{
+  route: {
+    path: '/graphql',
+    options: null
+  },
+  cacheAllowedOperations: null, // pass array of strings
+  cacheConfig: {
+    segment: '',
+    expiresIn: 0,
+    expiresAt: '',
+    staleIn: 0,
+    staleTimeout: 0,
+    generateTimeout: 500
+  },
+  jwtAuthenticate: {
+    headerName: 'authorization',
+    tokenType: 'Bearer',
+    operationName: 'authenticate',
+    returnPath: 'data.authenticate.jwtToken',
+    cookieName: 'token',
+    cookieOptions: {
+      // hapi cookie options here
+    }
+  },
+  pgConfig: '', // connection string or obj
+  pgOptions: null, // or obj, to merge with config
+  schemaName: 'public',
+  schemaOptions: {
+    // options from postgraphile
+  }
+}
+```
+
 ## Native bindings
 
 `hapi-postgraphile` will use the native `pg` bindings if you have them installed as a peer.
@@ -47,6 +95,11 @@ All of the options documented [here](https://www.graphile.org/postgraphile/usage
 
     * `graphqlRequest`: `{query, variables, operationName}`
     * `options`: `{jwtToken, [schemaOptions]}` — the options object can provide the JWT for the request and override any of the global schemaOptions if needed.
+    
+-   `postgraphile.performQueryWithCache(graphqlRequest)`
+
+    * `graphqlRequest`: `{query, variables, operationName}`
+    * cached queries cannot use options — they are ultimately uncachabled with a simple key/val lookup, and we'd also run into issues with JWT authentication.
 
 ## Requirements
 
