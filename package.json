@@ -17,12 +17,12 @@
   },
   "keywords": [
     "hapi",
+    "hapijs",
     "postgresql",
     "postgres",
-    "keyval",
-    "keystore",
-    "upsert",
-    "set",
+    "graphql",
+    "postgraphile",
+    "postgraphql",
     "database",
     "query"
   ],
