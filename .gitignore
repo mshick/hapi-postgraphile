@@ -38,3 +38,7 @@ jspm_packages
 
 # dotenv file
 .env
+
+# devel
+server.js
+example

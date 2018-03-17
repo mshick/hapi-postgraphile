@@ -1,5 +1,5 @@
 const hapi = require('hapi');
-const plugin = require('./src');
+const plugin = require('./lib');
 
 const {POSTGRES_USER, POSTGRES_DB} = process.env;
 const pgConfig = `postgresql://${POSTGRES_USER}@localhost/${POSTGRES_DB}`;
