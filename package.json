@@ -51,6 +51,7 @@
     "pg-native": "^2.2.0"
   },
   "peerDependencies": {
-    "hapi": "^17.0.0"
+    "hapi": "^17.0.0",
+    "pg": "^7.4.1"
   }
 }
