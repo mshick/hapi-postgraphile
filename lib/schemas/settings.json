@@ -70,7 +70,7 @@
         },
         "cookieName": {
           "type": ["string", "null"],
-          "default": "token"
+          "default": null
         },
         "cookieOptions": {
           "type": ["object", "null"],
@@ -82,7 +82,7 @@
             },
             "isSecure": {
               "type": "boolean",
-              "default": false
+              "default": true
             },
             "isHttpOnly": {
               "type": "boolean",

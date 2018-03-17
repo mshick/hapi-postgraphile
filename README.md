@@ -71,7 +71,7 @@ Defaults shown.
     tokenType: 'Bearer',
     operationName: 'authenticate',
     returnPath: 'data.authenticate.jwtToken',
-    cookieName: 'token',
+    cookieName: null,
     cookieOptions: {
       // hapi cookie options here
     }
