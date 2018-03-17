@@ -87,7 +87,7 @@ Defaults shown.
 
 ## Native bindings
 
-`hapi-postgraphile` will use the native `pg` bindings if you have them installed as a peer.
+`hapi-postgraphile` will use the native `pg` bindings if you have `pg-native` installed as a peer.
 
 ## Methods
 
@@ -104,6 +104,6 @@ Defaults shown.
 ## Requirements
 
 *   node.js >= 8.6
-*   PostgresQL >= 9.6 (tested with 9.6)
-*   [HAPI](https://github.com/hapijs/hapi) v17 as a peer dependency
+*   PostgreSQL >= 9.6 (tested with 9.6, developed with 10.2)
+*   [hapi](https://github.com/hapijs/hapi) v17 as a peer dependency
 *   [pg](https://github.com/brianc/node-postgres) module as a peer dependency
