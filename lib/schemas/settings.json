@@ -87,12 +87,12 @@
       }
     },
     "cookieAuthentication": {
-      "type": ["object", "null", "boolean"],
+      "type": ["object", "null"],
       "default": null,
       "required": ["name"],
       "properties": {
         "name": {
-          "type": ["string", "null"]
+          "type": "string"
         },
         "options": {
           "type": ["object", "null"],
