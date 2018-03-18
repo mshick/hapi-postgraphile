@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/mshick/hapi-postgraphile#readme",
   "dependencies": {
-    "ajv": "^6.2.1",
+    "ajv": "^6.3.0",
     "boom": "^7.2.0",
     "graphql": "^0.13.2",
     "lodash": "^4.17.5",
