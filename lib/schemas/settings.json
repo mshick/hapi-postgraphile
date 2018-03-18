@@ -78,7 +78,7 @@
       "properties": {
         "headerName": {
           "type": "string",
-          "default": "authorization"
+          "default": "Authorization"
         },
         "tokenType": {
           "type": "string",
