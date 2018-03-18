@@ -52,6 +52,8 @@ This should provide a reasonable level of security against CSRF attacks. When se
 
 You must provide a `cookieAuthentication.name`, which is the name of your cookie, and should review the `authenticate.loginOperationName`, `authenticate.logoutOperationName`, and `authenticate.tokenDataPath` options to ensure your queries and responses are handled. The default settings mirror the results you'd have following this [tutorial](https://www.graphile.org/postgraphile/postgresql-schema-design/).
 
+If you are using cookie authentication, you can look into using [crumb](https://github.com/hapijs/crumb) to provide anti-CSRF tokens to harden your security.
+
 ### (Nearly) All the options
 
 Defaults shown.
