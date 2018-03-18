@@ -54,17 +54,17 @@ You must provide a `cookieAuthentication.name`, which is the name of your cookie
 
 ### Security and CSRF mitigation
 
-Using the default settings should give you a reasonable level of security against CSRF attacks. These settings rely solely on the `Authorization` header, and should be immune to the most common exploits.
+Using the default settings should give you a reasonable level of security against CSRF attacks. These settings rely solely on the `Authorization` header, and should be immune to the most common exploits. Cookies are very convenient in some settings, but come with an added security risk, especially given the level of access a GraphQL endpoint typically has to the underlying database.
 
-If you do choose to use cookie authentication you can use the `verifyOrigin` checking to ensure that your request is coming from an allowed origin based on your server's CORS policy. The plugin will check hapi's `request.info.cors.isOriginMatch` on to ensure you have a valid origin. This can happen either on every request, `always`, or just on requests that contain the origin header — the `present` setting, which is a sensible default.
+If you do choose to use cookie authentication you can use the `authentication.verifyOrigin` checking to ensure that your request is coming from an allowed origin based on your server's CORS policy. The plugin will check hapi's `request.info.cors.isOriginMatch` to ensure you have a valid origin. This can happen either on every request, `always`, or just on requests that contain the origin header — the `present` setting, which is a sensible default.
 
 **For a secure setup with cookies you must do the following**
 
-1.  Ensure your route has a secure CORS policy in place either at the server level, or through a route option you pass to this plugin.
+1.  Ensure your route has a secure CORS policy in place either at the server level or through a route option you pass to this plugin. Read about setting your [server CORS policy](https://hapijs.com/api#server.options.routes) and / or your [route CORS policy](https://hapijs.com/api#route.options.cors). **Setting `cors: true` or `cors: ['*']` is not secure!**
 
-2.  Set the `hapi-postgraphile` config option `authentication.verifyOrigin` is set to `always` or `present`. If you do not set this value and you enable cookies the value will be upgraded to `present` for you and throw a warning.
+2.  Set the `hapi-postgraphile` config option `authentication.verifyOrigin` to `always` or `present`. If you do not update this value and you enable cookies the value will be upgraded to `present` for you and a warning will be thrown.
 
-3.  Ensure your cookie is using the `isSecure` and `httpOnly` options (both defaults).
+3.  Ensure your cookie is using the `isSecure` and `httpOnly` options (both defaults) to prevent against manipulation and domain forgery.
 
 4.  Consider also using anti-CSRF tokens like those provided by [crumb](https://github.com/hapijs/crumb).
 
@@ -77,7 +77,7 @@ Defaults shown.
 ```javascript
 {
   pgConfig: '', // connection string or obj
-  pgOptions: null, // or obj, to merge with config
+  pgOptions: null, // object to merge with config, for pg tuning, etc
   schemaName: 'public',
   schemaOptions: {
     // options from postgraphile
@@ -87,7 +87,7 @@ Defaults shown.
     options: null // options to pass to your route handler, merged with (and some overwritten by) the plugin's route options
   },
   cacheAllowedOperations: null, // pass array of strings
-  cacheConfig: {
+  cacheConfig: { // null by default
     segment: '',
     expiresIn: 0,
     expiresAt: '',
@@ -103,7 +103,7 @@ Defaults shown.
     tokenDataPath: 'data.authenticate.jwtToken'
   },
   headerAuthentication: {
-    headerName: 'authorization',
+    headerName: 'Authorization',
     tokenType: 'Bearer'
   },
   cookieAuthentication: { // by default this is null, to use cookies pass a name and any hapi cookie options — default options shown
