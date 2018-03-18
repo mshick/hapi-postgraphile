@@ -1,6 +1,7 @@
 {
   "title": "hapi-postgraphile options",
   "type": "object",
+  "required": ["pgConfig"],
   "properties": {
     "route": {
       "type": ["object", "boolean"],
@@ -21,6 +22,7 @@
     "cacheConfig": {
       "type": ["object", "null"],
       "default": null,
+      "required": ["generateTimeout"],
       "properties": {
         "segment": {
           "type": "string"
@@ -41,22 +43,22 @@
           "type": "number",
           "default": 500
         }
-      },
-      "required": ["generateTimeout"]
+      }
     },
-    "jwtAuthenticate": {
-      "type": ["object", "null"],
+    "authentication": {
+      "type": "object",
       "default": {},
       "properties": {
-        "headerName": {
-          "type": ["string", "null"],
-          "default": "authorization"
-        },
-        "tokenType": {
+        "verifyOrigin": {
           "type": "string",
-          "default": "Bearer"
+          "enum": ["always", "present", "never"],
+          "default": "never"
         },
-        "operationName": {
+        "verifyOriginOverride": {
+          "type": "boolean",
+          "default": false
+        },
+        "loginOperationName": {
           "type": "string",
           "default": "authenticate"
         },
@@ -64,15 +66,35 @@
           "type": "string",
           "default": "logout"
         },
-        "returnPath": {
+        "tokenDataPath": {
           "type": ["string", "null"],
           "default": "data.authenticate.jwtToken"
+        }
+      }
+    },
+    "headerAuthentication": {
+      "type": ["object", "null", "boolean"],
+      "default": {},
+      "properties": {
+        "headerName": {
+          "type": "string",
+          "default": "authorization"
         },
-        "cookieName": {
-          "type": ["string", "null"],
-          "default": null
+        "tokenType": {
+          "type": "string",
+          "default": "Bearer"
+        }
+      }
+    },
+    "cookieAuthentication": {
+      "type": ["object", "null", "boolean"],
+      "default": null,
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": ["string", "null"]
         },
-        "cookieOptions": {
+        "options": {
           "type": ["object", "null"],
           "default": {},
           "properties": {
@@ -116,6 +138,7 @@
     },
     "schemaOptions": {
       "type": "object",
+      "required": ["jwtSecret", "jwtAudiences"],
       "properties": {
         "watchPg": {
           "type": "boolean"
@@ -167,9 +190,7 @@
         "legacyJsonUuid": {
           "type": "boolean"
         }
-      },
-      "required": ["jwtSecret", "jwtAudiences"]
+      }
     }
-  },
-  "required": ["pgConfig"]
+  }
 }
