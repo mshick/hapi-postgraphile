@@ -46,13 +46,29 @@ Caching in this way, via the simple key/val store is very limited and can only c
 
 ### Cookie authentication 
 
-You can also set up your endpoint to store a cookie containing your JWT. If you choose to do this your server's CORS policy will provide the basis for the origins allowed to make successful requests. Meaning, before a request is allowed to occur the plugin will check `request.info.cors.isOriginMatch`.
+You can also set up your endpoint to store a cookie containing your JWT. 
 
-This should provide a reasonable level of security against CSRF attacks. When setting up an authentication cookie you should also review the `authenticate.verifyOrigin` setting, which controls when to verify origins. Options are `always`, `present` which will only verify the origin when the header is present (browser requests should always have this, other requests likely will not) or `never` which is unsafe when used in conjunction with cookies.
+When setting up an authentication cookie you should also review the `authenticate.verifyOrigin` setting.
 
 You must provide a `cookieAuthentication.name`, which is the name of your cookie, and should review the `authenticate.loginOperationName`, `authenticate.logoutOperationName`, and `authenticate.tokenDataPath` options to ensure your queries and responses are handled. The default settings mirror the results you'd have following this [tutorial](https://www.graphile.org/postgraphile/postgresql-schema-design/).
 
-If you are using cookie authentication, you can look into using [crumb](https://github.com/hapijs/crumb) to provide anti-CSRF tokens to harden your security.
+### Security and CSRF mitigation
+
+Using the default settings should give you a reasonable level of security against CSRF attacks. These settings rely solely on the `Authorization` header, and should be immune to the most common exploits.
+
+If you do choose to use cookie authentication you can use the `verifyOrigin` checking to ensure that your request is coming from an allowed origin based on your server's CORS policy. The plugin will check hapi's `request.info.cors.isOriginMatch` on to ensure you have a valid origin. This can happen either on every request, `always`, or just on requests that contain the origin header — the `present` setting, which is a sensible default.
+
+**For a secure setup with cookies you must do the following**
+
+1.  Ensure your route has a secure CORS policy in place either at the server level, or through a route option you pass to this plugin.
+
+2.  Set the `hapi-postgraphile` config option `authentication.verifyOrigin` is set to `always` or `present`. If you do not set this value and you enable cookies the value will be upgraded to `present` for you and throw a warning.
+
+3.  Ensure your cookie is using the `isSecure` and `httpOnly` options (both defaults).
+
+4.  Consider also using anti-CSRF tokens like those provided by [crumb](https://github.com/hapijs/crumb).
+
+Read the CSRF [Prevention Cheat Sheet](https://goo.gl/Gfv4Mt) for more detail.
 
 ### (Nearly) All the options
 
