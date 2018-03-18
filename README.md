@@ -76,6 +76,12 @@ Defaults shown.
 
 ```javascript
 {
+  pgConfig: '', // connection string or obj
+  pgOptions: null, // or obj, to merge with config
+  schemaName: 'public',
+  schemaOptions: {
+    // options from postgraphile
+  },
   route: {
     path: '/graphql',
     options: null // options to pass to your route handler, merged with (and some overwritten by) the plugin's route options
@@ -110,12 +116,6 @@ Defaults shown.
       strictHeader: true,
       path: '/'
     }    
-  },
-  pgConfig: '', // connection string or obj
-  pgOptions: null, // or obj, to merge with config
-  schemaName: 'public',
-  schemaOptions: {
-    // options from postgraphile
   }
 }
 ```
