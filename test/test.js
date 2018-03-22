@@ -7,18 +7,22 @@ const pgConfig = `postgresql://${POSTGRES_USER}@localhost/${POSTGRES_DB}`;
 
 test('simple test', async t => {
   try {
-    const server = hapi.server({port: 5000});
+    const server = new hapi.Server();
 
-    await server.register({
-      plugin,
+    server.connection({
+      port: 5000
+    });
+
+    server.register({
+      register: plugin,
       options: {
         pgConfig
       }
+    }, () => {
+      server.start(() => {
+        t.pass();
+      });
     });
-
-    await server.start();
-
-    t.pass();
   } catch (err) {
     t.fail(err);
   }
