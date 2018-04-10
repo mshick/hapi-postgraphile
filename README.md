@@ -48,6 +48,18 @@ Caching in this way, via the simple key/val store is very limited and can only c
 
 If you are using [hapi-auth-jwt2](https://github.com/dwyl/hapi-auth-jwt2) this plugin will read the token from that. In that case you'd want to be sure you are passing the same secret and necessary configuration to hapi-postgraphile, and if you're using jwt2 cookies the same security caveats as below will apply.
 
+If you do use this approach, also remember that you likely want to allow unauthenticated calls to the graphql endpoint as well. In that case consider passing a route option to hapi-postgraphile, like:
+
+```
+route: {
+  options: {
+    auth: {
+      mode: 'try'
+    }
+  }
+}
+```
+
 ### Cookie authentication
 
 You can also set up your endpoint to store a cookie containing your JWT.
