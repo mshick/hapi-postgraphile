@@ -40,13 +40,17 @@ All of the options documented [here](https://www.graphile.org/postgraphile/usage
 
 ### Caching
 
-`hapi-postgraphile` can take advantage of your server cache. You will need to set up the cacheConfig parameters you pass to the plugin, and declare a list of allowed operation names. 
+`hapi-postgraphile` can take advantage of your server cache. You will need to set up the cacheConfig parameters you pass to the plugin, and declare a list of allowed operation names.
 
 Caching in this way, via the simple key/val store is very limited and can only cache queries using default options, and cannot cash requests requiring JWT authentication.
 
-### Cookie authentication 
+### hapi-auth-jwt2
 
-You can also set up your endpoint to store a cookie containing your JWT. 
+If you are using [hapi-auth-jwt2](https://github.com/dwyl/hapi-auth-jwt2) this plugin will read the token from that. In that case you'd want to be sure you are passing the same secret and necessary configuration to hapi-postgraphile, and if you're using jwt2 cookies the same security caveats as below will apply.
+
+### Cookie authentication
+
+You can also set up your endpoint to store a cookie containing your JWT.
 
 When setting up an authentication cookie you should also review the `authenticate.verifyOrigin` setting.
 
@@ -99,7 +103,7 @@ Defaults shown.
     verifyOrigin: 'never', // or 'always' or 'present'
     verifyOriginOverride: false, // By default origin will be verified if using cookie auth. This let's you keep it as 'never'.
     loginOperationName: 'authenticate',
-    logoutOperationName: 'logout', 
+    logoutOperationName: 'logout',
     tokenDataPath: 'data.authenticate.jwtToken'
   },
   headerAuthentication: {
@@ -130,7 +134,7 @@ Defaults shown.
 
     *   `graphqlQuery`: `{query, variables, operationName}`
     *   `options`: `{jwtToken, [schemaOptions]}` — the options object can provide the JWT for the request and override any of the global schemaOptions if needed.
-    
+
 -   `postgraphile.performQueryWithCache(graphqlQuery)`
 
     *   `graphqlQuery`: `{query, variables, operationName}`
