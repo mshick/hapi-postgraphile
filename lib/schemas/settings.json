@@ -18,6 +18,7 @@
     },
     "errorHandling": {
       "type": "object",
+      "default": {},
       "properties": {
         "throwMethodErrors": {
           "type": "boolean",
