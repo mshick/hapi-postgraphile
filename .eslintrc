@@ -1,5 +1,9 @@
 {
-  "extends": "parsley/esnext",
+  "extends": ["parsley/esnext", "prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "error"
+  },
   "settings": {
     "import/resolver": "node"
   },
