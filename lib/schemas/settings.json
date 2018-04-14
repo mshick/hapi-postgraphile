@@ -16,6 +16,15 @@
         }
       }
     },
+    "errorHandling": {
+      "type": "object",
+      "properties": {
+        "throwMethodErrors": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
     "cacheAllowedOperations": {
       "type": ["array", "null"]
     },
