@@ -20,7 +20,7 @@
       "type": "object",
       "default": {},
       "properties": {
-        "throwMethodErrors": {
+        "throwQueryErrors": {
           "type": "boolean",
           "default": true
         }
@@ -68,17 +68,31 @@
           "type": "boolean",
           "default": false
         },
-        "loginOperationName": {
+        "getTokenOperationName": {
           "type": "string",
-          "default": "authenticate"
+          "default": "getToken"
         },
-        "logoutOperationName": {
+        "getTokenDataPath": {
           "type": "string",
-          "default": "logout"
+          "default": "data.getToken.jwtToken"
         },
-        "tokenDataPath": {
-          "type": ["string", "null"],
-          "default": "data.authenticate.jwtToken"
+        "refreshTokenOperationName": {
+          "type": "string",
+          "default": "refreshToken"
+        },
+        "refreshTokenDataPath": {
+          "type": "string",
+          "default": "data.refreshToken.jwtToken"
+        },
+        "refreshTokenQuery": {
+          "type": "string"
+        },
+        "refreshTokenVariables": {
+          "type": "object"
+        },
+        "clearTokenOperationName": {
+          "type": "string",
+          "default": "clearToken"
         }
       }
     },

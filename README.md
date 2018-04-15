@@ -1,4 +1,5 @@
 # hapi-postgraphile [![Build Status](https://travis-ci.org/mshick/hapi-postgraphile.svg?branch=master)](https://travis-ci.org/mshick/hapi-postgraphile) [![npm version](https://badge.fury.io/js/hapi-postgraphile.svg)](https://badge.fury.io/js/hapi-postgraphile)
+
 A [Postgraphile](https://www.graphile.org/postgraphile/) plugin for HAPI.
 
 ## Installation
@@ -86,6 +87,95 @@ If you do choose to use cookie authentication you can use the `authentication.ve
 
 Read the CSRF [Prevention Cheat Sheet](https://goo.gl/Gfv4Mt) for more detail.
 
+### Token refresh support (using cookie authentication)
+
+If you do use cookie authentication, I've included token refresh functionality.
+At a basic level this would allow you to create and call a `refreshToken`
+mutation, which is expected to read from the `jwt_claims` and return a `jwtToken`
+very similar to the reference `authenticate` mutation. In your PG function you
+might simply verify that the claimed identity still exists and is allowed, or
+you might check a session table to ensure they are still allowed access.
+
+For example:
+
+```sql
+create or replace function forum_example.refresh_token() returns forum_example.jwt_token as $$
+declare
+  account forum_example_private.person_account;
+begin
+  select a.* into account
+  from forum_example_private.person_account as a
+  where a.person_id = current_setting('jwt.claims.person_id')::text;
+
+  if FOUND and (account.suspended <> true) then
+    return ('forum_example_user', account.person_id)::forum_example.jwt_token;
+  else
+    return null;
+  end if;
+end;
+$$ language plpgsql strict security definer;
+
+grant execute on function forum_example.refresh_token() to forum_example_user;
+```
+
+By defining the `authenticate.refreshTokenOperationName` and
+`authenticate.refreshTokenDataPath` you can have your new token re-stated.
+
+#### Stale (jwtToken.sat support)
+
+If you return a jwtToken with a `sat` ("stale at") property this plugin will
+compare that value with the current time and refresh if necessary. `sat`, like
+other JWT properties, should be a UNIX epoch time in seconds.
+
+This approach assumes you have the decoded token available in your
+`request.auth.credentials` object — like the one provided by `hapi-auth-jwt2`.
+You could also create your own auth strategy to decode the token and populate
+this value, but be aware that `postgraphile` itself does not expose the
+decoded token itself.
+
+The refresh will happen during the `onPreResponse` extension point. You will
+need to supply an `authenticate.refreshTokenQuery` GraphQL query string, which
+will be invoked when the stale conditions are met.
+
+The following is an example of an authentication PG type and function that
+provides a valid JWT that could be refreshed sometime after it becomes stale
+and before it expires:
+
+```sql
+create type forum_example.jwt_token as (
+  role text,
+  person_id text,
+  exp int,
+  sat int
+);
+
+create or replace function forum_example.authenticate(
+  email text,
+  password text
+) returns forum_example.jwt_token as $$
+declare
+  account forum_example_private.person_account;
+  epoch_time int;
+  expires_in int default 1800;
+  stale_in int default 900;
+begin
+  select a.* into account
+  from forum_example_private.person_account as a
+  where a.email = $1;
+
+  if (account.suspended <> true) and (account.password_hash = crypt(password, account.password_hash)) then
+    epoch_time := extract(epoch from now());
+    -- 30 minute expiration, 15 minutes until stale
+    return ('forum_example_user', account.person_id, epoch_time + expires_in, epoch_time + stale_in)::forum_example.jwt_token;
+  else
+    raise exception 'invalid login';
+  end if;
+end;
+$$ language plpgsql strict security definer;
+```
+
+> Don't set your stale time too close to your expiration time to avoid issues.
+
 ### (Nearly) All the options
 
 Defaults shown.
@@ -114,9 +204,13 @@ Defaults shown.
   authenticate: {
     verifyOrigin: 'never', // or 'always' or 'present'
     verifyOriginOverride: false, // By default origin will be verified if using cookie auth. This let's you keep it as 'never'.
-    loginOperationName: 'authenticate',
-    logoutOperationName: 'logout',
-    tokenDataPath: 'data.authenticate.jwtToken'
+    getTokenOperationName: 'getToken', // your login or operation mutation
+    getTokenDataPath: 'data.getToken.jwtToken',
+    refreshTokenOperationName: 'refreshToken', // if you choose to use the refreshToken functionality
+    refreshTokenDataPath: 'data.refreshToken.jwtToken',
+    refreshTokenQuery: undefined, // if you want to use the refreshToken functionality, put your graphql mutation string here
+    refreshTokenVariables: undefined, // if your query requires any variables, object here
+    clearTokenOperationName: 'clearToken'
   },
   headerAuthentication: {
     headerName: 'Authorization',
@@ -131,7 +225,7 @@ Defaults shown.
       clearInvalid: false,
       strictHeader: true,
       path: '/'
-    }    
+    }
   }
 }
 ```
@@ -142,19 +236,19 @@ Defaults shown.
 
 ## Methods
 
--   `postgraphile.performQuery(graphqlQuery, [options])`
+* `postgraphile.performQuery(graphqlQuery, [options])`
 
-    *   `graphqlQuery`: `{query, variables, operationName}`
-    *   `options`: `{jwtToken, [schemaOptions]}` — the options object can provide the JWT for the request and override any of the global schemaOptions if needed.
+  * `graphqlQuery`: `{query, variables, operationName}`
+  * `options`: `{jwtToken, [schemaOptions]}` — the options object can provide the JWT for the request and override any of the global schemaOptions if needed.
 
--   `postgraphile.performQueryWithCache(graphqlQuery)`
+* `postgraphile.performQueryWithCache(graphqlQuery)`
 
-    *   `graphqlQuery`: `{query, variables, operationName}`
-    *   cached queries cannot use options — they are ultimately uncacheable with a simple key/val lookup, and we'd also run into issues with JWT authentication.
+  * `graphqlQuery`: `{query, variables, operationName}`
+  * cached queries cannot use options — they are ultimately uncacheable with a simple key/val lookup, and we'd also run into issues with JWT authentication.
 
 ## Requirements
 
-*   node.js >= 8.6
-*   PostgreSQL >= 9.6 (tested with 9.6, developed with 10.2)
-*   [hapi](https://github.com/hapijs/hapi) v17 as a peer dependency
-*   [pg](https://github.com/brianc/node-postgres) module as a peer dependency
+* node.js >= 8.6
+* PostgreSQL >= 9.6 (tested with 9.6, developed with 10.2)
+* [hapi](https://github.com/hapijs/hapi) v17 as a peer dependency
+* [pg](https://github.com/brianc/node-postgres) module as a peer dependency
