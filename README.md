@@ -55,7 +55,7 @@ If you do use this approach, also remember that you likely want to allow unauthe
 route: {
   options: {
     auth: {
-      mode: 'try'
+      mode: 'optional'
     }
   }
 }
@@ -67,7 +67,9 @@ You can also set up your endpoint to store a cookie containing your JWT.
 
 When setting up an authentication cookie you should also review the `authenticate.verifyOrigin` setting.
 
-You must provide a `cookieAuthentication.name`, which is the name of your cookie, and should review the `authenticate.loginOperationName`, `authenticate.logoutOperationName`, and `authenticate.tokenDataPath` options to ensure your queries and responses are handled. The default settings mirror the results you'd have following this [tutorial](https://www.graphile.org/postgraphile/postgresql-schema-design/).
+You must provide a `cookieAuthentication.name`, which is the name of your cookie, and should review the `authenticate.getTokenOperationName`, `authenticate.getTokenDataPath`, and `authenticate.clearTokenOperationName`
+options to ensure your queries and responses are handled. The default settings
+mirror the results you'd have following this [tutorial](https://www.graphile.org/postgraphile/postgresql-schema-design/).
 
 ### Security and CSRF mitigation
 
