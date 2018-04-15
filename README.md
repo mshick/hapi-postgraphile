@@ -232,6 +232,10 @@ Defaults shown.
 }
 ```
 
+## Examples
+
+Check out the `/examples` folder for a comprehensive implementation.
+
 ## Native bindings
 
 `hapi-postgraphile` will use the native `pg` bindings if you have `pg-native` installed as a peer.
