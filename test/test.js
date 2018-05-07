@@ -12,7 +12,10 @@ test('simple test', async t => {
     await server.register({
       plugin,
       options: {
-        pgConfig
+        pgConfig,
+        schemaOptions: {
+          jwtSecret: 'keyboard_kitten'
+        }
       }
     });
 
