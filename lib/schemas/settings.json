@@ -167,6 +167,7 @@
     "schemaOptions": {
       "type": "object",
       "required": ["jwtSecret", "jwtAudiences"],
+      "default": {},
       "properties": {
         "watchPg": {
           "type": "boolean"
