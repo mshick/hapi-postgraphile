@@ -154,6 +154,32 @@
         }
       }
     },
+    "pgConnectionRetry": {
+      "type": ["object", "null"],
+      "default": {},
+      "properties": {
+        "retries": {
+          "type": "number",
+          "default": 0
+        },
+        "factor": {
+          "type": "number",
+          "default": 2
+        },
+        "minTimeout": {
+          "type": "number",
+          "default": 1000
+        },
+        "maxTimeout": {
+          "type": "number",
+          "default": 999999999
+        },
+        "randomize": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
     "pgConfig": {
       "type": ["string", "object"]
     },

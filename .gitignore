@@ -42,3 +42,6 @@ jspm_packages
 # devel
 server.js
 example
+
+# editor files
+.vscode
