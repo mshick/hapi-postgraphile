@@ -186,6 +186,13 @@ Defaults shown.
 {
   pgConfig: '', // connection string or obj
   pgOptions: null, // object to merge with config, for pg tuning, etc
+  pgConnectionRetry: { // Settings for the retry module, invoked on connection errors.
+    retries: 5, // Set to 0 to disable
+    factor: 2,
+    minTimeout: 1000,
+    maxTimeout: 100000,
+    random: false
+  },
   schemaName: 'public',
   schemaOptions: {
     // options from postgraphile
