@@ -31,14 +31,14 @@
   },
   "homepage": "https://github.com/mshick/hapi-postgraphile#readme",
   "dependencies": {
-    "ajv": "^6.4.0",
+    "ajv": "^6.5.0",
     "boom": "^7.2.0",
     "graphql": "^0.13.2",
-    "jsonwebtoken": "^8.2.1",
+    "jsonwebtoken": "^8.2.2",
     "lodash": "^4.17.10",
     "p-retry": "^2.0.0",
     "pg-connection-string": "^2.0.0",
-    "postgraphile": "^4.0.0-beta.7",
+    "postgraphile": "^4.0.0-beta.10",
     "qs": "^6.5.2"
   },
   "devDependencies": {
@@ -49,12 +49,12 @@
     "eslint-config-parsley": "^1.2.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-filenames": "^1.2.0",
-    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-prettier": "^2.6.0",
-    "hapi": "^17.4.0",
-    "pg": "^7.4.2",
-    "pg-native": "^2.2.0",
-    "prettier": "^1.12.1"
+    "hapi": "^17.5.1",
+    "pg": "^7.4.3",
+    "pg-native": "^3.0.0",
+    "prettier": "^1.13.4"
   },
   "peerDependencies": {
     "hapi": "^17.0.0",
