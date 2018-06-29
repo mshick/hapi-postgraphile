@@ -133,9 +133,17 @@
             "encoding": { "type": ["string", "null"], "default": "none" },
             "isSecure": { "type": "boolean", "default": true },
             "isHttpOnly": { "type": "boolean", "default": true },
+            "isSameSite": {
+              "type": ["string", "null"],
+              "default": "Strict"
+            },
+            "ignoreErrors": {
+              "type": "boolean",
+              "default": false
+            },
             "clearInvalid": { "type": "boolean", "default": false },
             "strictHeader": { "type": "boolean", "default": true },
-            "path": { "type": ["string", "null"], "default": "/" }
+            "path": { "type": ["string", "null"], "default": null }
           }
         }
       }
