@@ -126,30 +126,16 @@
           "type": ["object", "null"],
           "default": {},
           "properties": {
-            "encoding": {
-              "type": ["string", "null"],
-              "default": "none"
+            "ttl": {
+              "type": ["number", "null"],
+              "default": null
             },
-            "isSecure": {
-              "type": "boolean",
-              "default": true
-            },
-            "isHttpOnly": {
-              "type": "boolean",
-              "default": true
-            },
-            "clearInvalid": {
-              "type": "boolean",
-              "default": false
-            },
-            "strictHeader": {
-              "type": "boolean",
-              "default": true
-            },
-            "path": {
-              "type": ["string", "null"],
-              "default": "/"
-            }
+            "encoding": { "type": ["string", "null"], "default": "none" },
+            "isSecure": { "type": "boolean", "default": true },
+            "isHttpOnly": { "type": "boolean", "default": true },
+            "clearInvalid": { "type": "boolean", "default": false },
+            "strictHeader": { "type": "boolean", "default": true },
+            "path": { "type": ["string", "null"], "default": "/" }
           }
         }
       }
