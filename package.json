@@ -33,7 +33,7 @@
   "dependencies": {
     "ajv": "^6.5.2",
     "boom": "^7.2.0",
-    "graphql": "^14.0.2",
+    "graphql": "^0.13.2",
     "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.10",
     "p-retry": "^2.0.0",
