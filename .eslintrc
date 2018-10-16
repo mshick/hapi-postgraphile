@@ -1,5 +1,5 @@
 {
-  "extends": ["parsley/esnext", "prettier"],
+  "extends": ["xo/esnext", "prettier"],
   "plugins": ["prettier"],
   "rules": {
     "prettier/prettier": "error"
