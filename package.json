@@ -1,6 +1,6 @@
 {
   "name": "hapi-postgraphile",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "author": "Michael Shick <m@shick.us>",
   "license": "MIT",
   "description": "A postgraphile plugin for HAPI 17+.",
