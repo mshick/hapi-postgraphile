@@ -97,6 +97,9 @@
         "clearTokenOperationName": {
           "type": "string",
           "default": "clearToken"
+        },
+        "clearTokenQuery": {
+          "type": "string"
         }
       }
     },
