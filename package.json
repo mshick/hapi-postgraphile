@@ -33,7 +33,7 @@
   "dependencies": {
     "ajv": "^6.10.0",
     "boom": "^7.3.0",
-    "graphql": "^0.13.2",
+    "graphql": "^14.6.0",
     "lodash": "^4.17.10",
     "p-retry": "^2.0.0",
     "pg-connection-string": "^2.0.0",
